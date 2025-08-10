@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const Token = require('../models/Token');
+import jwt from 'jsonwebtoken';
+import Token from '../models/Token.js';
 
 const generateTokens = async (userId) => {
   try {
@@ -77,4 +77,4 @@ const generateAdminTokens = async (userId, role) => {
   }
 };
 
-module.exports = { generateTokens, generateAdminTokens };
+export { generateTokens, generateAdminTokens };

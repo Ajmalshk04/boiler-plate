@@ -8,6 +8,7 @@ import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import xss from 'xss';
 import connectDB from './config/database.js';
+import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import errorHandler from './middleware/errorHandler.js';
 import TokenService from './services/TokenService.js';
@@ -60,8 +61,9 @@ const authLimiter = rateLimit({
 });
 
 app.use(limiter);
-app.use('/api/users/login', authLimiter);
-app.use('/api/users/register', authLimiter);
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/register', authLimiter);
+app.use('/api/auth/admin/login', authLimiter);
 
 // CORS configuration
 app.use(cors({
@@ -74,7 +76,7 @@ app.use(cors({
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-app.use(cookieParser());
+app.use(cookieParser(process.env.COOKIE_SECRET || 'your-cookie-secret'));
 
 // Data sanitization
 app.use(mongoSanitize());
@@ -95,6 +97,7 @@ app.use((req, res, next) => {
 app.use(compression());
 
 // Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 
 // Health check

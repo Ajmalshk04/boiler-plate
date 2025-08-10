@@ -16,12 +16,12 @@ const refreshTokenCookieOptions = {
   path: '/',
 };
 
-exports.setAuthCookies = (res, accessToken, refreshToken) => {
+export const setAuthCookies = (res, accessToken, refreshToken) => {
   res.cookie('_nw_t', accessToken, accessTokenCookieOptions);
   res.cookie('_nw_rt', refreshToken, refreshTokenCookieOptions);
 };
 
-exports.clearTokenCookie = (res) => {
+export const clearTokenCookie = (res) => {
   res.cookie('_nw_t', '', {
     ...accessTokenCookieOptions,
     maxAge: 1
@@ -32,12 +32,12 @@ exports.clearTokenCookie = (res) => {
   });
 };
 
-exports.setCRMAuthCookies = (res, accessToken, refreshToken) => {
+export const setCRMAuthCookies = (res, accessToken, refreshToken) => {
   res.cookie('c_nw_t', accessToken, accessTokenCookieOptions);
   res.cookie('c_nw_rt', refreshToken, refreshTokenCookieOptions);
 };
 
-exports.clearCRMTokenCookie = (res) => {
+export const clearCRMTokenCookie = (res) => {
   res.cookie('c_nw_t', '', {
     ...accessTokenCookieOptions,
     maxAge: 1
@@ -48,11 +48,4 @@ exports.clearCRMTokenCookie = (res) => {
   });
 };
 
-module.exports = { 
-  accessTokenCookieOptions, 
-  refreshTokenCookieOptions,
-  setAuthCookies: exports.setAuthCookies,
-  clearTokenCookie: exports.clearTokenCookie,
-  setCRMAuthCookies: exports.setCRMAuthCookies,
-  clearCRMTokenCookie: exports.clearCRMTokenCookie
-};
+export { accessTokenCookieOptions, refreshTokenCookieOptions };
